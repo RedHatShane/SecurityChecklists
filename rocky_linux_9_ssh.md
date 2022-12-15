@@ -44,7 +44,7 @@ PermitEmptyPasswords no
 
 Before continuing, leave existing SSH session(s) open and verify you can connect as the new user on the new port. Additionally, verify that the root user cannot log in via SSH.
 
-### Remove default SSH port (22) from firewalld and SELinux configurations
+### Remove default SSH port (22) from firewalld
 ```
 firewall-cmd --remove-service=ssh --permanent
 firewall-cmd --reload
