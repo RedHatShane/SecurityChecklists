@@ -1,7 +1,5 @@
 # Rocky Linux 9 SSH Security Checklist
-
-## Assumptions:
-You are running a new Rocky Linux server with root access and public key SSH authentication.
+For new Rocky Linux 9 servers with root access and public key SSH authentication.
 
 ### Run updates and install packages:
 `dnf update`
@@ -19,7 +17,7 @@ You are running a new Rocky Linux server with root access and public key SSH aut
 
 `chown -R ssh_user:ssh_user /home/ssh_user/.ssh`
 
-**BEFORE CONTINUING:** Leave initial SSH session open and verify you can connect as the new user and use sudo
+Before continuing, leave initial SSH session open and verify you can connect as the new user and use sudo
 
 ### Configure firewallD and SELinux with an alternate SSH port
 `systemctl start firewalld`
@@ -47,7 +45,7 @@ You are running a new Rocky Linux server with root access and public key SSH aut
   
 `systemctl reload sshd`
 
-**BEFORE CONTINUING:** Leave existing SSH session(s) open and verify you can connect as the new user on the new port. Additionally, verify that the root user cannot log in via SSH.
+Before continuing, leave existing SSH session(s) open and verify you can connect as the new user on the new port. Additionally, verify that the root user cannot log in via SSH.
 
 ### Remove default SSH port (22) from firewalld and SELinux configurations
 `firewall-cmd --remove-service=ssh --permanent`
