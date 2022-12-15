@@ -58,7 +58,7 @@ su - ssh_user
 google-authenticator -s ~/.ssh/gauth    ## Answer "y" to all; scan QR code into your Google Authenticator app
 ```
 
-### Edit PAM and SSHD configuration files to enable keypair/OTP 2FA
+### Edit PAM and SSHD configuration files and reload SSHD
 `sudo vi /etc/pam.d/sshd`
 
 ```
@@ -68,7 +68,8 @@ auth     required   pam_google_authenticator.so secret=${HOME}/.ssh/gauth nullok
 
 `sudo vi /etc/ssh/sshd_config`
 ```
-KbdInteractiveAuthentication yes.                              #Ensure these two lines are present
+KbdInteractiveAuthentication yes                          #Ensure these two lines are present
 AuthenticationMethods publickey,keyboard-interactive           
 ```
+`sudo systemctl reload sshd`
 
