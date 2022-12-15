@@ -49,3 +49,25 @@ Before continuing, leave existing SSH session(s) open and verify you can connect
 firewall-cmd --remove-service=ssh --permanent
 firewall-cmd --reload
 ```
+
+### Install and configure Google Authenticator for SSH user
+```
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+dnf install google-authenticator qrencode-devel
+su - ssh_user
+google-authenticator -s ~/.ssh/g_auth    ## Answer "y" to all; scan QR code into your Google Authenticator app
+```
+
+### Edit PAM and SSHD configuration files to enable keypair/OTP 2FA
+```
+sudo vi /etc/pam.d/sshd
+#auth    substack   password-auth                                                     #Find this line and comment it out
+auth     required   pam_google_authenticator.so secret=${HOME}/.ssh/g_auth nullok     #Add this line beneath the password-auth line
+```
+
+```
+sudo vi /etc/ssh/sshd_config
+KbdInteractiveAuthentication yes.                              #Ensure these two lines are present and 
+AuthenticationMethods publickey,keyboard-interactive           #not commented out.
+```
+
